@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: generateDate-service
+  labels:
+    app: generateDate
+spec:
+  type: LoadBalancer
+  selector:
+    app: generateDate
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000

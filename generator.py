@@ -1,41 +1,44 @@
-import time
-import random
-import requests
-import json
 import psutil
 import os
+import random
 import numpy as np
-import threading
+import time
+import logging
+from flask import Flask
+from threading import Thread
+from flask import Flask, jsonify
 
-# Set process affinity to a single core
 p = psutil.Process(os.getpid())
-p.cpu_affinity([0])  # Pin to the first core.
-
-# List of sample stock symbols
+p.cpu_affinity([0])
 stocks = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA"]
+app = Flask(__name__)
 
-# API endpoint to send the generated data
-api_endpoint = "http://localhost:5000/ingest"
+
+@app.route("/")
+def get_data():
+    data = generate_additional_data()
+    return jsonify(data)
 
 
 def generate_data():
+    global data
     stock_symbol = random.choice(stocks)
-    prev_price = 1000  # Assume some initial price
-    dt = 1  # Time step, e.g., 1 day
-    mu = 0.0002  # Drift (average daily return)
-    sigma = 0.01  # Volatility (standard deviation of daily return)
+    prev_price = 1000 
+    dt = 1 
+    mu = 0.0002 
+    sigma = 0.01 
 
     price_change = np.exp((mu - 0.5 * sigma**2) * dt +
-                          sigma * np.sqrt(dt) * np.random.normal())
+              sigma * np.sqrt(dt) * np.random.normal())
     opening_price = max(0, prev_price * price_change)
     closing_price = max(0, opening_price +
-                        round(random.normalvariate(0, 10), 2))
+              round(random.normalvariate(0, 10), 2))
     high = max(opening_price, closing_price) + \
-        round(abs(random.normalvariate(0, 5)), 2)
+              round(abs(random.normalvariate(0, 5)), 2)
     low = min(opening_price, closing_price) - \
-        round(abs(random.normalvariate(0, 5)), 2)
+              round(abs(random.normalvariate(0, 5)), 2)
     volume = max(0, int(np.random.poisson(5000) *
-                 (1 + 0.1 * np.random.normal())))
+              (1 + 0.1 * np.random.normal())))
 
     data = {
         "stock_symbol": stock_symbol,
@@ -53,7 +56,7 @@ def generate_additional_data():
     stock_symbol = random.choice(stocks)
     timestamp = time.time()
     data_types = ['order_book', 'news_sentiment',
-                  'market_data', 'economic_indicator']
+           'market_data', 'economic_indicator']
     data_type = random.choice(data_types)
 
     if data_type == 'order_book':
@@ -88,29 +91,20 @@ def generate_additional_data():
             "indicator_name": "GDP Growth Rate",
             "value": random.uniform(-5, 5)
         }
+    logging.info(f"Generated Data: {data}")
     return data
 
 
-def send_data(data):
-    try:
-        response = requests.post(api_endpoint, data=json.dumps(
-            data), headers={"Content-Type": "application/json"})
-        if response.status_code != 200:
-            print(f"Failed to send data: {data}. Response: {response.text}")
-    except Exception as e:
-        print(f"Error occurred: {e}")
-
-
-def send_additional_data():
+def generate_and_send_data():
     while True:
         data = generate_additional_data()
-        send_data(data)
-        time.sleep(random.uniform(1, 5))
+        time.sleep(random.uniform(1, 5)) 
 
 
 if __name__ == "__main__":
-    threading.Thread(target=send_additional_data, daemon=True).start()
-    while True:
-        data = generate_data()
-        send_data(data)
-        time.sleep(random.uniform(1, 5))
+    try:
+        thread = Thread(target=generate_and_send_data)
+        thread.start()
+        app.run(host='0.0.0.0', port=5000)
+    except Exception as e:
+        logging.critical(f"Fatal error: {e}")
