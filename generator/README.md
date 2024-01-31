@@ -90,6 +90,7 @@ CMD ["python", "generator.py"]
 EXPOSE 5000
 ```
 It sets up a Python environment, copies requirements.txt and generator.py to /app, installs the required packages, and specifies the command to run the Flask app on port 5000.
+
 **2. Pushing the Image to a Container Registry**🚌
 Build the Docker image with the following command:
 ```
@@ -107,6 +108,7 @@ sudo docker run -p 5000:5000 localhost:5001/generateDate:latest
 **verify:**
 
 docker image ls
+
 
 **3. Install MetalLB**🐋
  We use metalLB for load balancing.
