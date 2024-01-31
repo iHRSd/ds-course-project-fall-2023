@@ -11,6 +11,8 @@ from flask import Flask, jsonify
 p = psutil.Process(os.getpid())
 p.cpu_affinity([0])
 stocks = ["AAPL", "GOOGL", "AMZN", "MSFT", "TSLA"]
+
+# Instead of API, we used flask!
 app = Flask(__name__)
 
 
@@ -94,8 +96,8 @@ def generate_additional_data():
     logging.info(f"Generated Data: {data}")
     return data
 
-
-def generate_and_send_data():
+# Because of removing API (and replace with Flask): removed send_data and send_additional_data
+def send_data_additional_data():
     while True:
         data = generate_additional_data()
         time.sleep(random.uniform(1, 5)) 
@@ -103,7 +105,7 @@ def generate_and_send_data():
 
 if __name__ == "__main__":
     try:
-        thread = Thread(target=generate_and_send_data)
+        thread = Thread(target=send_data_additional_data)
         thread.start()
         app.run(host='0.0.0.0', port=5000)
     except Exception as e:
