@@ -98,12 +98,12 @@ $ sudo docker build -t generateDate .
 ```
 Tag the Docker image using the following command:
 ```
-$ sudo docker tag generateDate localhost:5001/generateDate
-$ sudo docker push localhost:5001/generateDate
+$ sudo docker tag generatedate localhost:5001/generatedate
+$ sudo docker push localhost:5001/generatedate
 ```
 run docker
 ```
-sudo docker run -p 5000:5000 localhost:5001/generateDate:latest
+sudo docker run -p 5000:5000 localhost:5001/generatedate:latest
 ```
 **verify:**
 
