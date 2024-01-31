@@ -94,7 +94,7 @@ It sets up a Python environment, copies requirements.txt and generator.py to /ap
 **2. Pushing the Image to a Container Registry**🚌
 Build the Docker image with the following command:
 ```
-$ sudo docker build -t generateDate .
+$ sudo docker build -t generatedate .
 ```
 Tag the Docker image using the following command:
 ```
