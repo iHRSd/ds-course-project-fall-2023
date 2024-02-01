@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: generatorDate-deployment
+ name: generatordate-deployment
 spec:
  replicas: 3 # Set the desired number of replicas (pods) for your application
  selector:
   matchLabels:
-   app: generateDate
+   app: generatedate
  template:
   metadata:
    labels:
-    app: generateDate
+    app: generatedate
   spec:
    containers:
-   - name: generateDate
-     image: localhost:5001/generateDate # Replace with your actual Docker image name
+   - name: generatedate
+     image: localhost:5001/generatedate # Replace with your actual Docker image name
      ports:
      - containerPort: 5000
