@@ -126,6 +126,7 @@ EXPOSE 5000
 It sets up a Python environment, copies requirements.txt and generator.py to /app, installs the required packages, and specifies the command to run the Flask app on port 5000.
 
 **2. Pushing the Image to a Container Registry**🚌
+
 Build the Docker image with the following command:
 ```
 $ sudo docker build -t generateDate .
@@ -144,6 +145,7 @@ sudo docker run -p 5000:5000 localhost:5001/generateDate:latest
 docker image ls
 
 **3. Install MetalLB**🐋
+
  We use metalLB for load balancing.
 > MetalLB is a networking service for Kubernetes that allows you to point multiple pods in a Kubernetes cluster to a single domain name or IP. MetalLB uses several types of loopbacks and spokes to distribute traffic to pods.
 
@@ -160,6 +162,7 @@ helm install metallb metallb/metallb
 ```
 
 **4. Deploying the Python Application in Kubernetes**🕹️
+
 To run your Flask application in Kubernetes, you need to create a deployment. A deployment is defined in a YAML file and specifies details like the Docker image for the application, the number of replicas, and other settings. In Kubernetes, a deployment manages a set of identical pods, where each pod represents a single instance of a running process in a cluster.
 ```
 apiVersion: apps/v1
@@ -194,6 +197,7 @@ kubectl delete deployment generatorDate-server
 ```
 
 **5. Exposing the Deployment as a Service**🧮
+
 To make the Flask app accessible from outside the Kubernetes cluster, create a service to expose the deployment.
 
 In Kubernetes, a service is an abstraction layer that enables communication between a set of pods and external clients. It provides a stable IP address and DNS name for a set of pods, so that other pods or external clients can reliably access the application running in the pod. A service can have different types, such as ClusterIP, NodePort, and LoadBalancer.
