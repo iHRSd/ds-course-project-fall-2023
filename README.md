@@ -93,6 +93,9 @@ This function stops the Python script, generator.py, by using pkill -f to kill a
 ```
 pkill -f $SCRIPT_NAME
 ```
+
+![manager.sh_code](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-30%20154007.png)
+
 ## Run🔧
 So,run this instruction in the terminal :
 ```
