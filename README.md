@@ -175,19 +175,19 @@ To run your Flask application in Kubernetes, you need to create a deployment. A 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: generatorDate-deployment
+ name: generatordate-deployment
 spec:
  replicas: 3 # Set the desired number of replicas (pods) for your application
  selector:
   matchLabels:
-   app: generateDate
+   app: generatedate
  template:
   metadata:
    labels:
-    app: generateDate
+    app: generatedate
   spec:
    containers:
-   - name: generateDate
+   - name: generatedate
      image: localhost:5001/generateDate # Replace with your actual Docker image name
      ports:
      - containerPort: 5000
@@ -195,12 +195,12 @@ spec:
 
 **Run the kubectl command to apply the deployment**
 ```
-kubectl create deployment generatorDate-server --image=localhost:5001/generateDate:latest
+kubectl create deployment generatordate-server --image=localhost:5001/generateDate:latest
 kubectl port-forward <pod_name> 5000:5000
 
 # stop and remove deployment
 kubectl delete pod <pod_name>
-kubectl delete deployment generatorDate-server
+kubectl delete deployment generatordate-server
 ```
 
 **5. Exposing the Deployment as a Service**🧮
@@ -212,13 +212,13 @@ In Kubernetes, a service is an abstraction layer that enables communication betw
 apiVersion: v1
 kind: Service
 metadata:
-  name: generateDate-service
+  name: generatedate-service
   labels:
-    app: generateDate
+    app: generatedate
 spec:
   type: LoadBalancer
   selector:
-    app: generateDate
+    app: generatedate
   ports:
     - port: 5000
       protocol: TCP
@@ -227,13 +227,13 @@ spec:
 
 **Run the kubectl command to apply the service**
 ```
-$kubectl apply -f generateDate-service.yaml
+$kubectl apply -f generatedate-service.yaml
 ```
 
 **6. running all manifests and checking result**⛓️
 ```
 $kubectl apply -f kubernetes/
-$kubectl get service generateDate-service
+$kubectl get service generatedate-service
 ```
 This command returns the external IP address of the LoadBalancer service. You can use it to access the Flask REST API from a web browser or HTTP client outside the Kubernetes cluster.
 
