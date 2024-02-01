@@ -94,8 +94,6 @@ This function stops the Python script, generator.py, by using pkill -f to kill a
 pkill -f $SCRIPT_NAME
 ```
 
-![manager.sh_code](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-30%20154007.png)
-
 ## Run🔧
 So,run this instruction in the terminal :
 ```
@@ -109,6 +107,7 @@ bash manager.sh start
 bash manager.sh stop
 #stop generator.py
 ```
+![manager.sh_code](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-30%20154618.png)
 # Docker 🪄
 
 **1. Packaging the Application as a Docker Image**🎁
@@ -134,6 +133,8 @@ Build the Docker image with the following command:
 ```
 $ sudo docker build -t generateDate .
 ```
+![build_docker_image](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20190901.png)
+
 Tag the Docker image using the following command:
 ```
 $ sudo docker tag generateDate localhost:5001/generateDate
@@ -143,9 +144,12 @@ run docker
 ```
 sudo docker run -p 5000:5000 localhost:5001/generateDate:latest
 ```
+![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20192109.png)
 **verify:**
 
 docker image ls
+
+![output_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20192031.png)
 
 **3. Install MetalLB**🐋
 
