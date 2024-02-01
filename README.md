@@ -142,7 +142,7 @@ $ sudo docker push localhost:5001/generatedate
 ```
 run docker
 ```
-sudo docker run -p 5000:5000 localhost:5001/generateDate:latest
+sudo docker run -p 5000:5000 localhost:5001/generatedate:latest
 ```
 ![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20192109.png)
 **verify:**
@@ -188,7 +188,7 @@ spec:
   spec:
    containers:
    - name: generatedate
-     image: localhost:5001/generateDate # Replace with your actual Docker image name
+     image: localhost:5001/generatedate # Replace with your actual Docker image name
      ports:
      - containerPort: 5000
 ```
