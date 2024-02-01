@@ -115,7 +115,7 @@ bash manager.sh stop
 A Dockerfile contains instructions for building a Docker image, which facilitates a consistent and reproducible environment for Kubernetes deployment.
 ```
 FROM python:3.8.10
-
+sudo docker build -t generatedate .
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
@@ -131,14 +131,14 @@ It sets up a Python environment, copies requirements.txt and generator.py to /ap
 
 Build the Docker image with the following command:
 ```
-$ sudo docker build -t generateDate .
+$ sudo docker build -t generatedate .
 ```
 ![build_docker_image](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20190901.png)
 
 Tag the Docker image using the following command:
 ```
-$ sudo docker tag generateDate localhost:5001/generateDate
-$ sudo docker push localhost:5001/generateDate
+$ sudo docker tag generatedate localhost:5001/generatedate
+$ sudo docker push localhost:5001/generatedate
 ```
 run docker
 ```
