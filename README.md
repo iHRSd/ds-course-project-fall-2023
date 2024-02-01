@@ -114,7 +114,7 @@ bash manager.sh stop
 
 A Dockerfile contains instructions for building a Docker image, which facilitates a consistent and reproducible environment for Kubernetes deployment.
 ```
-FROM python:3.7-slim-buster
+FROM python:3.8.10
 
 WORKDIR /app
 COPY requirements.txt .
