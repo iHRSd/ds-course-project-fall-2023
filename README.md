@@ -209,10 +209,11 @@ kubectl get pods
 ```
 kubectl port-forward <pod_name> 5000:5000
 ```
-⚠️ <dl>
-<code style="color : red">ERROR :  kubectl port-forward generatordate-server-5d97ff45c-24qjt 5000:5000
-error: unable to forward port because pod is not running.</code>
-    </dl>
+⚠️ 
+```diff
+- ERROR :  kubectl port-forward generatordate-server-5d97ff45c-24qjt 5000:5000 => error: unable to forward port because pod is not running.
+```
+
 
 # stop and remove deployment
 ```
