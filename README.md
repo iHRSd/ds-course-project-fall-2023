@@ -156,16 +156,15 @@ docker image ls
  We use metalLB for load balancing.
 > MetalLB is a networking service for Kubernetes that allows you to point multiple pods in a Kubernetes cluster to a single domain name or IP. MetalLB uses several types of loopbacks and spokes to distribute traffic to pods.
 
-**install Helm**
-```
-wget https://get.helm.sh/helm-v3.13.3-linux-arm64.tar.gz
-tar -zxvf helm-v3.13.3-linux-arm64.tar.gz
-sudo mv linux-arm64/helm /usr/local/bin/helm
-```
 **install metalLB**
+
+go to the [metalLB](https://github.com/metallb/metallb/blob/main/config/manifests/metallb-native.yaml) and download metallb-native.yaml .
+
+and run this:
 ```
-helm repo add metallb https://metallb.github.io/metallb
-helm install metallb metallb/metallb
+minikube start
+minikube start --driver=docker
+kubectl apply -f metallb-native.yaml
 ```
 
 **4. Deploying the Python Application in Kubernetes**🕹️
