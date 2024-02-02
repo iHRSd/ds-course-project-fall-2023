@@ -402,7 +402,8 @@ in dockerfile ,generator.py file is included in docker image via COPY instructio
 ```diff
 +  you'll need to rebuild your Docker image.
 ```
-
+⚠️Don't forget to update dockerfile with new app file:
+> COPY generator-update.py .
 ## teammate 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
 ## References📑
