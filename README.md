@@ -206,6 +206,17 @@ kubectl get pods
 
 ![get pods](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-01%20194705.png)
 
+
+**activating metalLB addon**
+After start minikube, we must activate the metallb addon. To view all the available addons, run this command:
+```
+minikube addons list
+```
+![addon list](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20134823.png)
+
+> Addons are activated with minikube addons enable:
+
+![metallb active](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20135516.png)
 ```
 kubectl port-forward <pod_name> 5000:5000
 ```
