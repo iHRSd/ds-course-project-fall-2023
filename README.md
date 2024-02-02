@@ -302,7 +302,10 @@ we need to pull a Kafka image and integrate it into this setup for real-time dat
 ```
 docker pull confluentinc/cp-kafka:latest
 ```
+
+![pull kafka](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20182816.png)
 **Create a Kafka Deployment:**
+
 Create a kafka-deployment.yaml file with the following content:
 
 ```
@@ -370,9 +373,13 @@ spec:
 **Apply the Deployments:**
 
 ```
-kubectl apply -f kafka-deployment.yaml
-kubectl apply -f kafka-service.yaml
+kubectl apply -f kafka/
 ```
+
+![apply kafka](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20184052.png)
+
+**result**🎥
+![result](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20184209.png)
 
 ## teammate 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
