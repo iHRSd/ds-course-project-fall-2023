@@ -395,9 +395,8 @@ in dockerfile ,generator.py file is included in docker image via COPY instructio
 > COPY generator.py .
 
 ```diff
-  +  you'll need to rebuild your Docker image.because any changes we've made to the file locally won't be reflected in the existing image until you rebuild it.
++  you'll need to rebuild your Docker image.
 ```
-
 
 ## teammate 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
