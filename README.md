@@ -217,13 +217,6 @@ minikube addons list
 > Addons are activated with minikube addons enable:
 
 ![metallb active](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20135516.png)
-```
-kubectl port-forward <pod_name> 5000:5000
-```
-⚠️ 
-```diff
-- ERROR :  kubectl port-forward generatordate-server-5d97ff45c-24qjt 5000:5000 => error: unable to forward port because pod is not running.
-```
 
 
 # stop and remove deployment
@@ -231,6 +224,7 @@ kubectl port-forward <pod_name> 5000:5000
 kubectl delete pod <pod_name>
 kubectl delete deployment generatordate-server
 ```
+![remove](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20151200.png)
 
 **5. Exposing the Deployment as a Service**🧮
 
@@ -242,33 +236,142 @@ apiVersion: v1
 kind: Service
 metadata:
   name: generatedate-service
-  labels:
-    app: generatedate
 spec:
   type: LoadBalancer
   selector:
     app: generatedate
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   ports:
-    - port: 5000
-      protocol: TCP
-      targetPort: 5000
+  - name: generatedate
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
+    # If you set the `spec.type` field to `NodePort` and you want a specific port number,
+    # you can specify a value in the `spec.ports[*].nodePort` field.
+   
 ```
 
-**Run the kubectl command to apply the service**
+**6. Create metallb config file** Ⓜ️
+
+Next you need to create ConfigMap, which includes an IP address range for the load balancer. The pool of IPs must be dedicated to MetalLB's use.
+> You can't reuse for example the Kubernetes node IPs or IPs controlled by other services.
 ```
-$kubectl apply -f generatedate-service.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - <ip-address-range-start>-<ip-address-range-stop>
 ```
 
-**6. running all manifests and checking result**⛓️
+
+**7. running all manifests and checking result**⛓️
 ```
-$kubectl apply -f kubernetes/
+$kubectl apply -f mykube/
+```
+
+![apply](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20152818.png)
+
+```
 $kubectl get service generatedate-service
 ```
 This command returns the external IP address of the LoadBalancer service. You can use it to access the Flask REST API from a web browser or HTTP client outside the Kubernetes cluster.
 
-**7. result**🎥
+**8. result**🎥
 ```
 http://<EXTERNAL_IP_ADDRESS>:80
+```
+
+# Step1 : Ingestion and stream processing 📼
+for processing data in realtime, we need stream processing services like : apache kafka,apache spark ... .
+we use apache kafka.
+we need to pull a Kafka image and integrate it into this setup for real-time data processing.
+## Deploying Kafka in Minikube:
+
+**Pull the Kafka Docker Image:**
+
+```
+docker pull confluentinc/cp-kafka:latest
+```
+**Create a Kafka Deployment:**
+Create a kafka-deployment.yaml file with the following content:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: confluentinc/cp-kafka:latest
+        ports:
+        - containerPort: 9092
+          name: kafka
+        env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: zookeeper:2181
+        - name: KAFKA_METRICS_REPORTER_ENABLED
+          value: true
+        - name: KAFKA_METRICS_REPORTER_INTERVAL_MS
+          value: 30000
+        livenessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+```
+
+**Create a Kafka Service:**
+
+Create a kafka-service.yaml file with the following content:
+
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  selector:
+    app: kafka
+  ports:
+  - port: 9092
+    targetPort: 9092
+  type: NodePort
+```
+**Apply the Deployments:**
+
+```
+kubectl apply -f kafka-deployment.yaml
+kubectl apply -f kafka-service.yaml
 ```
 
 ## teammate 🎭
@@ -278,3 +381,4 @@ http://<EXTERNAL_IP_ADDRESS>:80
 - [Source](https://github.com/Msiavashi/ds-course-project-fall-2023)
 - [Deploying a Python Application with Kubernetes](https://komodor.com/blog/deploying-a-python-application-with-kubernetes/)
 - [Using Flask to Build a Simple API](https://betterprogramming.pub/setting-up-a-simple-api-b3b00bc026b4)
+- - [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
