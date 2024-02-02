@@ -6,5 +6,5 @@ RUN pip install -r requirements.txt
 
 COPY generator-update.py .
 
-CMD ["python", "generator.py"]
+CMD ["python", "generator-update.py"]
 EXPOSE 5000
