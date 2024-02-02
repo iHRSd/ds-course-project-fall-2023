@@ -4,7 +4,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY generator.py .
+COPY generator-update.py .
 
 CMD ["python", "generator.py"]
 EXPOSE 5000
