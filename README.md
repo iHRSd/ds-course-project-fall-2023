@@ -297,14 +297,14 @@ we use apache kafka.
 we need to pull a Kafka image and integrate it into this setup for real-time data processing.
 ## Deploying Kafka in Minikube:
 
-**Pull the Kafka Docker Image:**
+**1. Pull the Kafka Docker Image:**
 
 ```
 docker pull confluentinc/cp-kafka:latest
 ```
 
 ![pull kafka](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20182816.png)
-**Create a Kafka Deployment:**
+**2. Create a Kafka Deployment:**
 
 Create a kafka-deployment.yaml file with the following content:
 
@@ -352,7 +352,7 @@ spec:
           timeoutSeconds: 5
 ```
 
-**Create a Kafka Service:**
+**3. Create a Kafka Service:**
 
 Create a kafka-service.yaml file with the following content:
 
@@ -370,7 +370,7 @@ spec:
     targetPort: 9092
   type: NodePort
 ```
-**Apply the Deployments:**
+**4. Apply the Deployments:**
 
 ```
 kubectl apply -f kafka/
@@ -380,6 +380,28 @@ kubectl apply -f kafka/
 
 **result**🎥
 ![result](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20184209.png)
+
+**5. Deploying Kafka Connect:**
+
+Ensure to update the BOOTSTRAP_SERVERS environment variable in the deployment to point to Kafka service:
+```
+- name: BOOTSTRAP_SERVERS
+  value: http://kafka:9092
+```
+according to this command ,we must update generator.py .
+we create [generator-update.py](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/generator-update.py)
+
+and for this file we use confluent_kafka library,that we run this command:
+```
+pip install confluent-kafka
+```
+
+in dockerfile ,generator.py file is included in docker image via COPY instructions:
+> COPY generator.py .
+
+```diff
++  you'll need to rebuild your Docker image.
+```
 
 ## teammate 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
