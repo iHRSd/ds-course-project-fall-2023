@@ -298,3 +298,4 @@ http://<EXTERNAL_IP_ADDRESS>:80
 - [Source](https://github.com/Msiavashi/ds-course-project-fall-2023)
 - [Deploying a Python Application with Kubernetes](https://komodor.com/blog/deploying-a-python-application-with-kubernetes/)
 - [Using Flask to Build a Simple API](https://betterprogramming.pub/setting-up-a-simple-api-b3b00bc026b4)
+- - [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
