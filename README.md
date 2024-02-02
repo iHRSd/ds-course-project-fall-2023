@@ -217,13 +217,6 @@ minikube addons list
 > Addons are activated with minikube addons enable:
 
 ![metallb active](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20135516.png)
-```
-kubectl port-forward <pod_name> 5000:5000
-```
-⚠️ 
-```diff
-- ERROR :  kubectl port-forward generatordate-server-5d97ff45c-24qjt 5000:5000 => error: unable to forward port because pod is not running.
-```
 
 
 # stop and remove deployment
@@ -231,6 +224,7 @@ kubectl port-forward <pod_name> 5000:5000
 kubectl delete pod <pod_name>
 kubectl delete deployment generatordate-server
 ```
+![remove](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20151200.png)
 
 **5. Exposing the Deployment as a Service**🧮
 
@@ -242,22 +236,43 @@ apiVersion: v1
 kind: Service
 metadata:
   name: generatedate-service
-  labels:
-    app: generatedate
 spec:
   type: LoadBalancer
   selector:
     app: generatedate
+  sessionAffinity: None
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   ports:
-    - port: 5000
-      protocol: TCP
-      targetPort: 5000
+  - name: generatedate
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
+    # If you set the `spec.type` field to `NodePort` and you want a specific port number,
+    # you can specify a value in the `spec.ports[*].nodePort` field.
+   
 ```
 
-**Run the kubectl command to apply the service**
+**6. Create metallb config file** Ⓜ️
+
+Next you need to create ConfigMap, which includes an IP address range for the load balancer. The pool of IPs must be dedicated to MetalLB's use.
+> You can't reuse for example the Kubernetes node IPs or IPs controlled by other services.
 ```
-$kubectl apply -f generatedate-service.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - <ip-address-range-start>-<ip-address-range-stop>
 ```
+
 
 **6. running all manifests and checking result**⛓️
 ```
