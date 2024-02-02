@@ -391,6 +391,11 @@ Ensure to update the BOOTSTRAP_SERVERS environment variable in the deployment to
 according to this command ,we must update generator.py .
 we create [generator-update.py](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/generator-update.py)
 
+and for this file we use confluent_kafka library,that we run this command:
+```
+pip install confluent-kafka
+```
+
 in dockerfile ,generator.py file is included in docker image via COPY instructions:
 > COPY generator.py .
 
