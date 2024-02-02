@@ -291,6 +291,89 @@ This command returns the external IP address of the LoadBalancer service. You ca
 http://<EXTERNAL_IP_ADDRESS>:80
 ```
 
+# Step1 : Ingestion and stream processing 📼
+for processing data in realtime, we need stream processing services like : apache kafka,apache spark ... .
+we use apache kafka.
+we need to pull a Kafka image and integrate it into this setup for real-time data processing.
+## Deploying Kafka in Minikube:
+
+**Pull the Kafka Docker Image:**
+
+```
+docker pull confluentinc/cp-kafka:latest
+```
+**Create a Kafka Deployment:**
+Create a kafka-deployment.yaml file with the following content:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: confluentinc/cp-kafka:latest
+        ports:
+        - containerPort: 9092
+          name: kafka
+        env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: zookeeper:2181
+        - name: KAFKA_METRICS_REPORTER_ENABLED
+          value: true
+        - name: KAFKA_METRICS_REPORTER_INTERVAL_MS
+          value: 30000
+        livenessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: 9092
+          initialDelaySeconds: 15
+          periodSeconds: 20
+          successThreshold: 1
+          timeoutSeconds: 5
+```
+
+**Create a Kafka Service:**
+
+Create a kafka-service.yaml file with the following content:
+
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  selector:
+    app: kafka
+  ports:
+  - port: 9092
+    targetPort: 9092
+  type: NodePort
+```
+**Apply the Deployments:**
+
+```
+kubectl apply -f kafka-deployment.yaml
+kubectl apply -f kafka-service.yaml
+```
+
 ## teammate 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
 ## References📑
