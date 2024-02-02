@@ -276,7 +276,10 @@ data:
 
 **6. running all manifests and checking result**⛓️
 ```
-$kubectl apply -f kubernetes/
+$kubectl apply -f mykube/
+
+![apply](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20152818.png)
+
 $kubectl get service generatedate-service
 ```
 This command returns the external IP address of the LoadBalancer service. You can use it to access the Flask REST API from a web browser or HTTP client outside the Kubernetes cluster.
