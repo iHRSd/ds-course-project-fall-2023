@@ -4,6 +4,7 @@ import random
 import numpy as np
 import time
 import logging
+import threading
 from confluent_kafka import Producer
 
 p = psutil.Process(os.getpid())
