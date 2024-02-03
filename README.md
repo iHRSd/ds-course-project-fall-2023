@@ -200,9 +200,12 @@ and run this:
 ```
 minikube start --driver=docker
 ````
+
 ````
 kubectl apply -f metallb-native.yaml
-```
+````
+
+
 ![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-01%20193015.png)
 
 **4. Deploying the Python Application in Kubernetes**🕹️
