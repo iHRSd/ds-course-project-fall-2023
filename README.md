@@ -263,9 +263,6 @@ minikube addons list
 # stop and remove deployment
 ```
 kubectl delete pod <pod_name>
-````
-
-````
 kubectl delete deployment generatordate-server
 ```
 
