@@ -131,18 +131,20 @@ It sets up a Python environment, copies requirements.txt and generator.py to /ap
 
 Build the Docker image with the following command:
 ```
-$ sudo docker build -t generatedate .
+sudo docker build -t generatedate .
 ```
 ![build_docker_image](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20190901.png)
 
 Tag the Docker image using the following command:
 ```
-$ sudo docker tag generatedate localhost:5001/generatedate
-$ sudo docker push localhost:5001/generatedate
+sudo docker tag generatedate localhost:5000/generatedate
+```
+```
+sudo docker push localhost:5000/generatedate
 ```
 run docker
 ```
-sudo docker run -p 5000:5000 localhost:5001/generatedate:latest
+sudo docker run -p 5100:5100 localhost:5000/generatedate
 ```
 ![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20192109.png)
 **verify:**
@@ -162,8 +164,9 @@ go to the [metalLB](https://github.com/metallb/metallb/blob/main/config/manifest
 
 and run this:
 ```
-minikube start
 minikube start --driver=docker
+````
+````
 kubectl apply -f metallb-native.yaml
 ```
 ![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-01%20193015.png)
@@ -188,7 +191,7 @@ spec:
   spec:
    containers:
    - name: generatedate
-     image: localhost:5001/generatedate # Replace with your actual Docker image name
+     image: localhost:5000/generatedate # Replace with your actual Docker image name
      ports:
      - containerPort: 5000
 ```
@@ -222,6 +225,8 @@ minikube addons list
 # stop and remove deployment
 ```
 kubectl delete pod <pod_name>
+````
+````
 kubectl delete deployment generatordate-server
 ```
 ![remove](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20151200.png)
@@ -404,11 +409,12 @@ in dockerfile ,generator.py file is included in docker image via COPY instructio
 ```
 ⚠️Don't forget to update dockerfile with new app file:
 > COPY generator-update.py .
-## teammate 🎭
+## team 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
+- [Rozhina Ghiasi](https://github.com/Rozh-Zizigoloo)
 ## References📑
 
 - [Source](https://github.com/Msiavashi/ds-course-project-fall-2023)
 - [Deploying a Python Application with Kubernetes](https://komodor.com/blog/deploying-a-python-application-with-kubernetes/)
 - [Using Flask to Build a Simple API](https://betterprogramming.pub/setting-up-a-simple-api-b3b00bc026b4)
-- - [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
+- [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
