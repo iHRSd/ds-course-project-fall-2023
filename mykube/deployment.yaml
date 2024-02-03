@@ -26,7 +26,7 @@ spec:
           # - Each init container must complete successfully before the next one starts.
       containers:
       - name:  generatedate
-        image:  localhost:5001/generatedate:latest
+        image:  localhost:5000/generatedate:latest
         resources:
           requests:
             cpu: 100m

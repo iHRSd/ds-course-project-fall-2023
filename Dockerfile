@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 COPY generator.py .
 
 CMD ["python", "generator.py"]
-EXPOSE 6100
+EXPOSE 5000
