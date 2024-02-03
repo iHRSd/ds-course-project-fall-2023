@@ -249,6 +249,7 @@ kubectl get pods
 
 **activating metalLB addon**
 After start minikube, we must activate the metallb addon. To view all the available addons, run this command:
+
 ```
 minikube addons list
 ```
@@ -263,9 +264,11 @@ minikube addons list
 ```
 kubectl delete pod <pod_name>
 ````
+
 ````
 kubectl delete deployment generatordate-server
 ```
+
 ![remove](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20151200.png)
 
 **5. Exposing the Deployment as a Service**🧮
@@ -299,7 +302,9 @@ spec:
 **6. Create metallb config file** Ⓜ️
 
 Next you need to create ConfigMap, which includes an IP address range for the load balancer. The pool of IPs must be dedicated to MetalLB's use.
+
 > You can't reuse for example the Kubernetes node IPs or IPs controlled by other services.
+
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -317,6 +322,7 @@ data:
 
 
 **7. running all manifests and checking result**⛓️
+
 ```
 $kubectl apply -f mykube/
 ```
@@ -326,9 +332,11 @@ $kubectl apply -f mykube/
 ```
 $kubectl get service generatedate-service
 ```
+
 This command returns the external IP address of the LoadBalancer service. You can use it to access the Flask REST API from a web browser or HTTP client outside the Kubernetes cluster.
 
 **8. result**🎥
+
 ```
 http://<EXTERNAL_IP_ADDRESS>:80
 ```
@@ -337,6 +345,7 @@ http://<EXTERNAL_IP_ADDRESS>:80
 for processing data in realtime, we need stream processing services like : apache kafka,apache spark ... .
 we use apache kafka.
 we need to pull a Kafka image and integrate it into this setup for real-time data processing.
+
 ## Deploying Kafka in Minikube:
 
 **1. Pull the Kafka Docker Image:**
@@ -346,6 +355,7 @@ docker pull confluentinc/cp-kafka:latest
 ```
 
 ![pull kafka](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20182816.png)
+
 **2. Create a Kafka Deployment:**
 
 Create a kafka-deployment.yaml file with the following content:
@@ -412,6 +422,7 @@ spec:
     targetPort: 9092
   type: NodePort
 ```
+
 **4. Apply the Deployments:**
 
 ```
