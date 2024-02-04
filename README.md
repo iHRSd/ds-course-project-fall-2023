@@ -139,14 +139,14 @@ sudo docker build -t generatedate .
 
 Tag the Docker image using the following command:
 ```
-sudo docker tag generatedate localhost:5000/generatedate
+sudo docker tag generatedate localhost:5100/generatedate
 ```
 ```
-sudo docker push localhost:5000/generatedate
+sudo docker push localhost:5100/generatedate
 ```
 run docker
 ```
-sudo docker run -p 5100:5100 localhost:5000/generatedate
+sudo docker run -p 5000:5000 localhost:5100/generatedate
 ```
 ![build_container](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-01-31%20192109.png)
 **verify:**
