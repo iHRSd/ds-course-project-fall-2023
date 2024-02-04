@@ -335,10 +335,16 @@ This command returns the external IP address of the LoadBalancer service. You ca
 **8. result**🎥
 
 ```
-http://<EXTERNAL_IP_ADDRESS>:80
+http://<EXTERNAL_IP_ADDRESS>:
 ```
+for result, minikube ip is 172.18.0.1 and docker ip is 172.17.0.1. So , when we go to the minikube ssh and "crul 172.18.0.1", we can see result(dataset) :
 
-# Step1 : Ingestion and stream processing 📼
+![result](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-03%20215257.png)
+
+![result1](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-03%20220225.png)
+
+# Step2 : Ingestion and stream processing 📼
+
 for processing data in realtime, we need stream processing services like : apache kafka,apache spark ... .
 we use apache kafka.
 we need to pull a Kafka image and integrate it into this setup for real-time data processing.
@@ -429,7 +435,9 @@ kubectl apply -f kafka/
 ![apply kafka](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20184052.png)
 
 **result**🎥
+
 ![result](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20184209.png)
+
 
 **5. Deploying Kafka Connect:**
 
@@ -454,6 +462,17 @@ in dockerfile ,generator.py file is included in docker image via COPY instructio
 ```
 ⚠️Don't forget to update dockerfile with new app file:
 > COPY generator-update.py .
+
+# Step3 : process ⚒️
+
+Now, we can processes the data by calculating financial indicators.
+Indicators are:
+> Moving Average (MA)
+> Exponential Moving Average (EMA)
+> Relative Strength Index (RSI).
+
+so for this instruction,we get data from kafka and process them by calculating financial.then we can show it:
+
 ## team 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
 - [Rozhina Ghiasi](https://github.com/Rozh-Zizigoloo)
