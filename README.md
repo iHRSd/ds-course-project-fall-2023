@@ -237,7 +237,7 @@ spec:
 
 **Run the kubectl command to apply the deployment**
 ```
-kubectl create deployment generatordate-server --image=localhost:5001/generatedate:latest
+kubectl create deployment generatordate-server --image=localhost:5100/generatedate:latest
 ```
 ![generatedate-server](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-01%20194151.png)
 
@@ -518,4 +518,4 @@ producer.send("topic_name", value="Hello, World!".encode("utf-8"))
 - [Deploying a Python Application with Kubernetes](https://komodor.com/blog/deploying-a-python-application-with-kubernetes/)
 - [Using Flask to Build a Simple API](https://betterprogramming.pub/setting-up-a-simple-api-b3b00bc026b4)
 - [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
-- [kafka config]((https://medium.com/@ramjoshi.blogs/stream-processing-with-python-and-apache-kafka-a-beginners-guide-3f01a373cd6f)
+- [kafka config](https://medium.com/@ramjoshi.blogs/stream-processing-with-python-and-apache-kafka-a-beginners-guide-3f01a373cd6f)
