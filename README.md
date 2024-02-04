@@ -237,7 +237,7 @@ spec:
 
 **Run the kubectl command to apply the deployment**
 ```
-kubectl create deployment generatordate-server --image=localhost:5001/generatedate:latest
+kubectl create deployment generatordate-server --image=localhost:5100/generatedate:latest
 ```
 ![generatedate-server](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-01%20194151.png)
 
