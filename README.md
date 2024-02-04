@@ -343,7 +343,9 @@ for result, minikube ip is 172.18.0.1 and docker ip is 172.17.0.1. So , when we 
 
 ![result](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-03%20215257.png)
 
-![result1](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-03%20220225.png)
+
+![Screenshot 2024-02-03 220225](https://github.com/iHRSd/ds-course-project-fall-2023/assets/156912661/0e8c9258-e396-4bba-b3b9-b10e56c0dd1e)
+
 
 # Step2 : Ingestion and stream processing 📼
 
