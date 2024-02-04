@@ -262,7 +262,7 @@ minikube addons list
 ![metallb active](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/Screenshot%202024-02-02%20135516.png)
 
 
-## stop and remove deployment
+**stop and remove deployment**
 ```
 kubectl delete pod <pod_name>
 kubectl delete deployment generatordate-server
