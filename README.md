@@ -472,6 +472,38 @@ Indicators are:
 > Relative Strength Index (RSI).
 
 so for this instruction,we get data from kafka and process them by calculating financial.then we can show it:
+1.wrtie kafka consumer for get data:
+
+```
+from kafka import KafkaConsumer
+import pandas as pd
+
+consumer = KafkaConsumer('my_topic',
+                         bootstrap_servers=['kafka_broker:9092'],
+                         auto_offset_reset='earliest',
+                         enable_auto_commit=False,
+                         group_id='my_group_id',
+                         value_deserializer=lambda x: x.decode('utf-8')
+                        )
+
+for message in consumer:
+    data = message.value.decode("utf-8")
+    df = pd.read_json(data)
+    print("Received data: ", df.head())
+```
+
+2.write calculation functions
+3.write Kafka Producer to get result and show in broker:
+
+```
+from kafka import KafkaProducer
+
+producer = KafkaProducer(
+    bootstrap_servers=["kafka_broker:9092"]
+)
+
+producer.send("topic_name", value="Hello, World!".encode("utf-8"))
+```
 
 ## team 🎭
 - [Hamidreza SayyadDaryabakhsh](https://github.com/iHRSd)
@@ -482,3 +514,4 @@ so for this instruction,we get data from kafka and process them by calculating f
 - [Deploying a Python Application with Kubernetes](https://komodor.com/blog/deploying-a-python-application-with-kubernetes/)
 - [Using Flask to Build a Simple API](https://betterprogramming.pub/setting-up-a-simple-api-b3b00bc026b4)
 - [metallb config file](https://docs.k0sproject.io/v1.23.6+k0s.2/examples/metallb-loadbalancer/)
+- [kafka config]((https://medium.com/@ramjoshi.blogs/stream-processing-with-python-and-apache-kafka-a-beginners-guide-3f01a373cd6f))
