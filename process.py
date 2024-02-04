@@ -22,7 +22,7 @@ for message in consumer:
     # Handle results (store, visualize, send to other systems)
  
 # DataFrame to store the processed data 
-processed_data_df = pd.DataFrame() 
+processed_data_df = pf.DataFrame() 
  
 def select_appropriate_field(data): 
     if data['data_type'] == 'order_book': 
@@ -75,7 +75,7 @@ def stream_processed_data():
     } 
  
     while True: 
-        df = pd.read_json(data) 
+        dp = df.read_json(data) 
         data = message.value.decode("utf-8") 
  
         data_type = data.get('data_type') 
