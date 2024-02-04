@@ -19,16 +19,18 @@ In this project, we have to process financial data in real time.
 - use load balancing
 - send data to **Data Ingestion**
 
-**2. Data Ingestion:**
+**2. Data Ingestion &stream processing**
 - receives the simulated data
 - validates it
-- send data to **Stream Processing**
+- use kafka for real time stream processing
+- send data to **Processing**
 
-**3.Stream Processing:**
+**3.Processing:**
 - calculates the mandatory trading indicators
 - generates real-time trading signals.
 
-![diagram](https://github.com/Rozh-Zizigoloo/Distributed-Systems-Project/assets/156912661/a62b2e8c-d80e-40b7-960c-dc01e24f0842)
+![diagram](https://github.com/iHRSd/ds-course-project-fall-2023/blob/main/images/diagram.drawio.svg)
+
 
 # Step1 : Generate Data
 In this part, a series of synthetic data is created through the **generator.py** file and must be placed in an API endpoint that will be given to the next steps for data processing.
